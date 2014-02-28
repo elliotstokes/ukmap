@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+<head>
+<style type="text/css">
+.graticule {
+  fill: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}	
+</style>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+<script type="text/javascript">
+
+
+var width = 960,
+	height = 960,
+	xym = d3.geo.mercator()
+	//.scale((width + 1) / 2 / Math.PI)
+    .translate([400,2500])
+    .scale(1900)
+    //.translate([0, -1200])
+    .precision(.1),
+	path = d3.geo.path().projection(xym);
+ 
+ 
+
+
+ 
+var svg = d3.select("body")
+    .append("svg").attr("id","svgoriginal");
+
+
+var graticule = d3.geo.graticule();
+ 
+ svg.append("path")
+    .datum(graticule)
+    .attr("class", "graticule")
+    .attr("d", path);
+
+var gemeentes = svg.append("g")
+    .attr("id", "gemeentes")
+    .attr("class", "RdYlGn");
+ 
+d3.json("geoinformation.json", function (json) {
+    gemeentes.selectAll("path")   // select all the current path nodes
+        .data(json.features)      // bind these to the features array in json
+        .enter().append("path")   // if not enough elements create a new path
+        //.attr("class", quantize)  // add attribute class and fill with result from quantize
+        //.attr("id", named)
+        .attr("d", path)          // transform the supplied jason geo path to svg
+        .attr("fill","none")
+        .attr('stroke', 'black')
+});
+</script>
+</html>
