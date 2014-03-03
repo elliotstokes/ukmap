@@ -14,27 +14,34 @@
 
 <body>
 
+<div>
+Show area
+
+<a href="#" class="panner" data-scale="2800" data-translate="650,3780">England</a>
+<a href="#" class="panner" data-scale="7000" data-translate="870,9000">Scotland</a>
+<a href="#" class="panner"data-scale="8000" data-translate="1100,8900">Wales</a>
+<a href="#" class="panner" data-scale="2800" data-translate="650,3780">UK</a>
+</div>
+
 </body>
 <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
 <script type="text/javascript">
 
+(function() {
 
 var width = 960,
 	height = 960,
 	xym = d3.geo.mercator()
-	//.scale((width + 1) / 2 / Math.PI)
-    .translate([400,2500])
-    .scale(1900)
-    //.translate([0, -1200])
-    .precision(.1),
+    .translate([650,3780])
+    .scale(2800),
 	path = d3.geo.path().projection(xym);
  
  
 
-
- 
 var svg = d3.select("body")
-    .append("svg").attr("id","svgoriginal");
+    .append("svg")
+    .attr("id","svgoriginal")
+    .attr("height",height).attr("width", width);
 
 
 var graticule = d3.geo.graticule();
@@ -44,12 +51,10 @@ var graticule = d3.geo.graticule();
     .attr("class", "graticule")
     .attr("d", path);
 
-var gemeentes = svg.append("g")
-    .attr("id", "gemeentes")
-    .attr("class", "RdYlGn");
+var lineContainer = svg.append("g");
  
 d3.json("geoinformation.json", function (json) {
-    gemeentes.selectAll("path")   // select all the current path nodes
+    lineContainer.selectAll("path")   // select all the current path nodes
         .data(json.features)      // bind these to the features array in json
         .enter().append("path")   // if not enough elements create a new path
         //.attr("class", quantize)  // add attribute class and fill with result from quantize
@@ -58,5 +63,19 @@ d3.json("geoinformation.json", function (json) {
         .attr("fill","none")
         .attr('stroke', 'black')
 });
+
+d3.selectAll(".panner").on("click", function() {
+    var item = d3.select(this),
+        scale = parseInt(item.attr("data-scale")),
+        points = item.attr("data-translate").split(","),
+        x = parseInt(points[0]),
+        y = parseInt(points[1]);
+
+    xym.scale(scale).translate([x,y]);
+    svg.selectAll("path").attr("d", path);
+    //graticule.attr("d", path);
+})
+
+})();
 </script>
 </html>
