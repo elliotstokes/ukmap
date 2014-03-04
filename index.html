@@ -53,12 +53,10 @@ var graticule = d3.geo.graticule();
 
 var lineContainer = svg.append("g");
  
-d3.json("geoinformation2.json", function (json) {
+d3.json("geoinformation.json", function (json) {
     lineContainer.selectAll("path")   // select all the current path nodes
         .data(json.features)      // bind these to the features array in json
         .enter().append("path")   // if not enough elements create a new path
-        //.attr("class", quantize)  // add attribute class and fill with result from quantize
-        //.attr("id", named)
         .attr("d", path)          // transform the supplied jason geo path to svg
         .attr("fill","none")
         .attr('stroke', 'black')
@@ -73,7 +71,6 @@ d3.selectAll(".panner").on("click", function() {
 
     xym.scale(scale).translate([x,y]);
     svg.selectAll("path").attr("d", path);
-    //graticule.attr("d", path);
 })
 
 })();
