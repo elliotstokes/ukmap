@@ -17,9 +17,9 @@
 <div>
 Show area
 
-<a href="#" class="panner" data-scale="2800" data-translate="650,3780">England</a>
+<a href="#" class="panner" data-scale="7000" data-translate="800,8000">England</a>
 <a href="#" class="panner" data-scale="7000" data-translate="870,9000">Scotland</a>
-<a href="#" class="panner"data-scale="8000" data-translate="1100,8900">Wales</a>
+<a href="#" class="panner"data-scale="9000" data-translate="950,10100">Wales</a>
 <a href="#" class="panner" data-scale="2800" data-translate="650,3780">UK</a>
 </div>
 
@@ -71,7 +71,9 @@ d3.selectAll(".panner").on("click", function() {
 
     xym.scale(scale).translate([x,y]);
     svg.selectAll("path").attr("d", path);
-})
+});
+
+var drag = d3.behavior.drag();
 
 })();
 </script>
