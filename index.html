@@ -53,13 +53,8 @@ var graticule = d3.geo.graticule();
 
 var lineContainer = svg.append("g");
  
-<<<<<<< HEAD
 d3.json("geoinformation2.json", function (json) {
-    gemeentes.selectAll("path")   // select all the current path nodes
-=======
-d3.json("geoinformation.json", function (json) {
     lineContainer.selectAll("path")   // select all the current path nodes
->>>>>>> FETCH_HEAD
         .data(json.features)      // bind these to the features array in json
         .enter().append("path")   // if not enough elements create a new path
         //.attr("class", quantize)  // add attribute class and fill with result from quantize
